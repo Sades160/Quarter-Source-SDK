@@ -4,6 +4,31 @@ Built off of the Source code for Source SDK 2013.
 
 Nothing has been added yet and im just now starting development on this as of August 17th 2025.
 
+**FEATURES PLANNED IN THE FUTURE**
+
+## NOTE: ALL OF THESE ARE FEATURES IN THE STRATA SOURCE BRANCH BUT I WANT TO TRY TO RECREATE THESE MYSELF!! LIST TAKEN FROM STRATA SOURCE WIKI!!
+
+## Clustered renderer with support for performant real-time lighting
+## Native DirectX 11 support for Windows
+## DirectX 11 support via DXVK-native for Linux
+## Panorama UI
+## Expanded map limits (128k x 128k x 128k) and increased entity cap via BSPv25
+## PBR shading
+## Parallax-corrected cubemaps
+## CSM (Originally from CSGO)
+## Backwards compatibility with BSP v19-21
+## Backwards compatibiltiy with TF2/HL2/L4D1/ASW branch models
+## WEBM and MP4 video support, replacing older Bink videos
+## Many improvements to Linux support
+## Fully cross platform engine tools and utils
+## Steam Audio for HRTF and basic occlusion
+## MP3, OGG and FLAC support
+## VTF v7.6 with support for BC6H, BC7 and lossless auxiliary compression using ZSTD or DEFLATE.
+## Many code quality improvements (Refactors, cleanup and C++23)
+## Sentry crash report integration
+## ImGui support in-game for tools (vprof, fogui, etc.)
+## And much much more!
+
 (rest of this text down below are unedited)
 
 Contains the game code for Half-Life 2, HL2: DM and TF2.
