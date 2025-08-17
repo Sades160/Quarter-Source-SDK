@@ -1,6 +1,10 @@
-# Source SDK 2013
+#  Quarter Source
 
-Source code for Source SDK 2013.
+Built off of the Source code for Source SDK 2013.
+
+Nothing has been added yet and im just now starting development on this as of August 17th 2025.
+
+(rest of this text down below are unedited)
 
 Contains the game code for Half-Life 2, HL2: DM and TF2.
 
