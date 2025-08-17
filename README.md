@@ -9,8 +9,7 @@ Nothing has been added yet and im just now starting development on this as of Au
 ## NOTE: ALL OF THESE ARE FEATURES IN THE STRATA SOURCE BRANCH BUT I WANT TO TRY TO RECREATE THESE MYSELF!! LIST TAKEN FROM STRATA SOURCE WIKI!!
 
 ## Clustered renderer with support for performant real-time lighting
-## Native DirectX 11 support for Windows
-## DirectX 11 support via DXVK-native for Linux
+## Optional DirectX 11 support for Windows With support via DXVK-native for Linux
 ## Panorama UI
 ## Expanded map limits (128k x 128k x 128k) and increased entity cap via BSPv25
 ## PBR shading
