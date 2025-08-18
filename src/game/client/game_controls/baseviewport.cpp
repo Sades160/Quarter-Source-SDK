@@ -162,6 +162,7 @@ CBaseViewport::CBaseViewport() : vgui::EditablePanel( NULL, "CBaseViewport")
 	SetSize( 10, 10 ); // Quiet "parent not sized yet" spew
 	gViewPortInterface = this;
 	m_bInitialized = false;
+	m_pMainMenuPanel = NULL;
 
 	m_GameuiFuncs = NULL;
 	m_GameEventManager = NULL;
@@ -207,6 +208,18 @@ void CBaseViewport::OnScreenSizeChanged(int iOldWide, int iOldTall)
 
 	IViewPortPanel* pSpecGuiPanel = FindPanelByName(PANEL_SPECGUI);
 	bool bSpecGuiWasVisible = pSpecGuiPanel && pSpecGuiPanel->IsVisible();
+
+	bool bRestartMainMenuVideo = false;
+
+	if ( m_pMainMenuPanel )
+		bRestartMainMenuVideo = m_pMainMenuPanel->IsVideoPlaying();
+
+	m_pMainMenuPanel = new CMainMenu( NULL, NULL );
+	m_pMainMenuPanel->SetZPos( 500 );
+	m_pMainMenuPanel->SetVisible( false );
+
+	if ( bRestartMainMenuVideo )
+		m_pMainMenuPanel->StartVideo();
 	
 	// reload the script file, so the screen positions in it are correct for the new resolution
 	ReloadScheme( NULL );
@@ -506,6 +519,13 @@ void CBaseViewport::RemoveAllPanels( void)
 		vgui::VPANEL vPanel = m_Panels[i]->GetVPanel();
 		vgui::ipanel()->DeletePanel( vPanel );
 	}
+
+		if ( m_pMainMenuPanel )
+	{
+		m_pMainMenuPanel->MarkForDeletion();
+		m_pMainMenuPanel = NULL;
+	}
+	
 #ifndef _XBOX
 	if ( m_pBackGround )
 	{
@@ -524,6 +544,10 @@ CBaseViewport::~CBaseViewport()
 
 	if ( gViewPortInterface == this )
 		gViewPortInterface = NULL;
+
+		if ( !m_bHasParent && m_pMainMenuPanel )
+		m_pMainMenuPanel->MarkForDeletion();
+	m_pMainMenuPanel = NULL;
 
 #ifndef _XBOX
 	if ( !m_bHasParent && m_pBackGround )
@@ -546,6 +570,12 @@ void CBaseViewport::Start( IGameUIFuncs *pGameUIFuncs, IGameEventManager2 * pGam
 {
 	m_GameuiFuncs = pGameUIFuncs;
 	m_GameEventManager = pGameEventManager;
+
+	m_pMainMenuPanel = new CMainMenu( NULL, NULL );
+	m_pMainMenuPanel->SetZPos( 500 );
+	m_pMainMenuPanel->SetVisible( false );
+	m_pMainMenuPanel->StartVideo();
+	
 #ifndef _XBOX
 	m_pBackGround = new CBackGroundPanel( NULL );
 	m_pBackGround->SetZPos( -20 ); // send it to the back 
@@ -756,6 +786,24 @@ void CBaseViewport::ReloadScheme(const char *fromFile)
 int CBaseViewport::GetDeathMessageStartHeight( void )
 {
 	return YRES(16);
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void CBaseViewport::StartMainMenuVideo()
+{
+	if ( m_pMainMenuPanel )
+		m_pMainMenuPanel->StartVideo();
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void CBaseViewport::StopMainMenuVideo()
+{
+	if ( m_pMainMenuPanel )
+		m_pMainMenuPanel->StopVideo();
 }
 
 void CBaseViewport::Paint()
