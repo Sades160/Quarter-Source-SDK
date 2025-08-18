@@ -1157,6 +1157,8 @@ bool CHLClient::ReplayPostInit()
 //-----------------------------------------------------------------------------
 // Purpose: Called after client & server DLL are loaded and all systems initialized
 //-----------------------------------------------------------------------------
+void SwapDisconnectCommand();
+
 void CHLClient::PostInit()
 {
 	IGameSystem::PostInitAllSystems();
@@ -1164,6 +1166,7 @@ void CHLClient::PostInit()
 #ifdef SIXENSE
 	// allow sixnese input to perform post-init operations
 	g_pSixenseInput->PostInit();
+		SwapDisconnectCommand();
 #endif
 
 	g_ClientVirtualReality.StartupComplete();
