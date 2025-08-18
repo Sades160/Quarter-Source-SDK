@@ -68,6 +68,9 @@ public:
 
 	virtual int GetDeathMessageStartHeight( void );	
 
+	void StartMainMenuVideo();
+	void StopMainMenuVideo();
+
 	// virtual void ChatInputPosition( int *x, int *y );
 
 	// Check if any panel other than the scoreboard is visible
@@ -107,7 +110,13 @@ protected:
 			SetMoveable(false);
 			SetSizeable(false);
 			SetProportional(true);
+			
 		}
+
+private:
+	class CMainMenu *m_pMainMenuPanel;
+
+
 	private:
 
 		virtual void ApplySchemeSettings(IScheme *pScheme)
