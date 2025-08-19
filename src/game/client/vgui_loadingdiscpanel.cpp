@@ -60,15 +60,33 @@ public:
 		BaseClass::PaintBackground();
 	}
 
-	virtual void SetText( const char *text )
-	{
-		m_pLoadingLabel->SetText( text );
-	}
+// This is where the SetText function is currently located - replace it with the new version
+virtual void SetText( const char *text )
+{
+    // Hide the original loading text
+    m_pLoadingLabel->SetVisible(false);
+    
+    // Update progress bar (you'll need to parse the progress from the text)
+    // Example: if text contains "Loading... (50%)"
+    int percentage = 0;
+    sscanf(text, "Loading... (%d%%)", &percentage);
+    
+    if (m_pProgressBar)
+    {
+        m_pProgressBar->SetProgress(percentage / 100.0f);
+    }
+    
+    if (m_pPercentageLabel)
+    {
+        char percentText[32];
+        Q_snprintf(percentText, sizeof(percentText), "%d%%", percentage);
+        m_pPercentageLabel->SetText(percentText);
+    }
+}
 
 private:
-	vgui::Label *m_pLoadingLabel;
-	int			m_ScreenSize[ 2 ];
-};
+    vgui::Label *m_pLoadingLabel;
+    int         m_ScreenSize[ 2 ];
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
@@ -87,6 +105,7 @@ CLoadingDiscPanel::CLoadingDiscPanel( vgui::VPANEL parent ) : BaseClass( NULL, "
 
 	m_pLoadingLabel = vgui::SETUP_PANEL(new vgui::Label( this, "LoadingLabel", "" ));
 	m_pLoadingLabel->SetPaintBackgroundEnabled( false );
+	
 
 	LoadControlSettings( "resource/LoadingDiscPanel.res" );
 
@@ -98,6 +117,8 @@ CLoadingDiscPanel::CLoadingDiscPanel( vgui::VPANEL parent ) : BaseClass( NULL, "
 	m_ScreenSize[ 0 ] = w;
 	m_ScreenSize[ 1 ] = h;
 }
+
+
 
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
@@ -114,6 +135,10 @@ private:
 	vgui::VPANEL m_hParent;
 
 	int m_nPrevTimeRemaining;
+
+private:
+    vgui::ProgressBar *m_pProgressBar;
+    vgui::Label *m_pPercentageLabel;
 
 public:
 	CLoadingDisc( void )
